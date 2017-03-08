@@ -20,6 +20,18 @@ if ( function_exists('__autoload') )
 // Membuat kembali fungsi autoload
 spl_autoload_register(function ( $class ) {
   
-  // Cek __NAMESPACE__
+  // Mengembalikan type huruf dari __namespace__ ke huruf kecil.
+  $class = strtolower( $class );
   
+  // Mengubah backslash menjadi slash.
+  $class = str_replace( "\\", "/", $class );
+  
+  // Membagi menjadi struktur array
+  //$class = explode( "/", $class );
+  
+  // Mengecek apakah kelas adalah sebuah file.
+  if ( file_exists( $class ) )
+    require $class;
+  else if ( file_exists( dirname(__DIR__) . "/{$class}" ) )
+    require(dirname(__DIR__) . "/{$class}");
 });
