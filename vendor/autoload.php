@@ -1,4 +1,3 @@
-#!/vendor;
 <?php
 /**
  * Apolbox - Autoload
