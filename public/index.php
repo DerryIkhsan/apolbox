@@ -24,7 +24,7 @@ function buildProject() {
   // File build.properties adalah file berformat json
   // kita akan mengkonvert menjadi sebuah array+.
   // Membuka file build.properties
-  if ( $openBuildProperties = fopen( $buildProperties, 'r+ ) ) {
+  if ( $openBuildProperties = fopen( $buildProperties, 'r+' ) ) {
     // Setelah terbuka sekarang saatnya membaca isi file.
     $readBuildProperties = fread( $openBuildProperties, 4096 );
     
