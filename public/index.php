@@ -57,3 +57,5 @@ function loadArrayIsFile( $array ) {
     require getProjectDirectory() . $array;
   }
 }
+
+return buildProject();
