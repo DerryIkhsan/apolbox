@@ -74,7 +74,6 @@ function extractArrayToString( $array, $commands ) {
 	// Cek perintah dari variabel $commands
 	$commands = isset( $_GET['command'] ) ? $_GET['command'] : 
 $commands;
-	
 	// Fungsi switch untuk mengecek hasil dari variabel command
 	switch( $commands ) {
 		case 'loadArrayIsFile':
@@ -99,6 +98,7 @@ $commands;
 // yang dideklarikan sebagai file.
 function loadArrayIsFile( array $arrayFiles ) {
 	$arrayFiles = is_array( $arrayFiles );
+	var_dump( $arrayFiles );
 }
 
 function repositories( $repo ) {
