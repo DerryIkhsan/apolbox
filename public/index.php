@@ -59,7 +59,7 @@ function extractArrayToString( $array, $commands ) {
             if ( ! function_exists( 'repositories' ) ) {
                 throw new Exception("Compiler repositories failed.", 1);
             }
-            repositories( $array['repositories'] );
+            $repositories = repositories( $array['repositories'] );
         }
 
         // Mencari kata kunci allProject di dalam array
@@ -69,9 +69,22 @@ function extractArrayToString( $array, $commands ) {
             if ( ! function_exists( 'allProject') ) {
                 throw new Exception("Compiler project failed", 1);
             }
-            allProject( $array['allProject'] );
+            $allProject = allProject( $array['allProject'] );
         }
-
+	// Cek perintah dari variabel $commands
+	$commands = isset( $_GET['command'] ) ? $_GET['command'] : 
+$commands;
+	
+	// Fungsi switch untuk mengecek hasil dari variabel command
+	switch( $commands ) {
+		case 'loadArrayIsFile':
+			// Memuat data properti
+			return loadArrayFile([
+				$repositories,
+				$allProject
+			]);
+			break;
+	}
     } catch (Exception $e) {
         printf( "Error on line %s", $e->getLine() );
         printf( "\rin %s", $e->getFIle() );
@@ -82,8 +95,10 @@ function extractArrayToString( $array, $commands ) {
 
 }
 
-function loadArrayIsFile( $arrayFiles ) {
-    require getProjectDirectory() . $array;
+// Fungsi yang digunakan untuk mengecek hasil dari array
+// yang dideklarikan sebagai file.
+function loadArrayIsFile( array $arrayFiles ) {
+	$arrayFiles = is_array( $arrayFiles );
 }
 
 function repositories( $repo ) {
@@ -118,3 +133,6 @@ function vendor( $vendor ) {
 }
 
 return buildProject();
+
+
+
