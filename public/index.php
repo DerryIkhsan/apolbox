@@ -19,7 +19,8 @@
 function buildProject() {
 
   // cek build.properties
-  $buildProperties = getProjectDirectory() . '/build.properties';
+  $buildProperties = getPublicDirectory() .  
+'/build.properties';
 
   // File build.properties adalah file berformat json
   // kita akan mengkonvert menjadi sebuah array+.
@@ -42,6 +43,18 @@ function buildProject() {
 function getProjectDirectory() {
   return dirname(__DIR__);
 }
+
+// Setup project public
+function getPublicDirectory( $public = null ) {
+	// Cek apakah folder $public ada
+	if ( is_dir( getProjectDirectory() . 
+DIRECTORY_SEPARATOR . $public ) ) {
+		return getProjectDirectory() . DIRECTORY_SEPARATOR . 
+$public;
+	}
+	return getProjectDirectory();
+}
+
 
 // Extrack array menjadi string
 function extractArrayToString( $array, $commands ) {
