@@ -20,6 +20,7 @@ function buildProject() {
 
   // cek build.properties
   $buildProperties = getPublicDirectory( '/public' ) . '/build.properties';
+  $settingsProperties = getPublicDirectory( '/public' ) . '/settings.properties';
 
   // File build.properties adalah file berformat json
   // kita akan mengkonvert menjadi sebuah array+.
@@ -36,6 +37,14 @@ function buildProject() {
     // dan mencoba untuk memuat isi dari array.
     extractArrayToString( $konvertToArray );
   }
+  
+  if ( $openSettingsProperties = fopen( $settingsProperties, 'r+' ) ) {
+      $readSettingsProperties = fread( $openSettingsProperties, 4096 );
+      
+      var_dump( $readSettingsProperties );
+  }
+  fclose( $openBuildProperties );
+  fclose( $openSettingsProperties );
 }
 
 // Setup project directory
