@@ -19,8 +19,7 @@
 function buildProject() {
 
   // cek build.properties
-  $buildProperties = getPublicDirectory() .  
-'/build.properties';
+  $buildProperties = getPublicDirectory( '/public' ) . '/build.properties';
 
   // File build.properties adalah file berformat json
   // kita akan mengkonvert menjadi sebuah array+.
@@ -35,7 +34,7 @@ function buildProject() {
 
     // Setelah menjadi file array saatnya membongkar isi dari array.
     // dan mencoba untuk memuat isi dari array.
-    extractArrayToString( $konvertToArray, 'loadArrayIsFile' );
+    extractArrayToString( $konvertToArray );
   }
 }
 
@@ -47,17 +46,14 @@ function getProjectDirectory() {
 // Setup project public
 function getPublicDirectory( $public = null ) {
 	// Cek apakah folder $public ada
-	if ( is_dir( getProjectDirectory() . 
-DIRECTORY_SEPARATOR . $public ) ) {
-		return getProjectDirectory() . DIRECTORY_SEPARATOR . 
-$public;
+	if ( is_dir( getProjectDirectory() . $public ) ) {
+		return getProjectDirectory() . $public;
 	}
 	return getProjectDirectory();
 }
 
-
 // Extrack array menjadi string
-function extractArrayToString( $array, $commands ) {
+function extractArrayToString( $array, $commands = null ) {
     try {
         // Jika $array bukan sebuah array dan $array tidak dalam array
         // maka laporkan error compiler file gagal.
@@ -72,7 +68,7 @@ function extractArrayToString( $array, $commands ) {
             if ( ! function_exists( 'repositories' ) ) {
                 throw new Exception("Compiler repositories failed.", 1);
             }
-            $repositories = repositories( $array['repositories'] );
+            repositories( $array['repositories'] );
         }
 
         // Mencari kata kunci allProject di dalam array
@@ -82,21 +78,8 @@ function extractArrayToString( $array, $commands ) {
             if ( ! function_exists( 'allProject') ) {
                 throw new Exception("Compiler project failed", 1);
             }
-            $allProject = allProject( $array['allProject'] );
+            allProject( $array['allProject'] );
         }
-	// Cek perintah dari variabel $commands
-	$commands = isset( $_GET['command'] ) ? $_GET['command'] : 
-$commands;
-	// Fungsi switch untuk mengecek hasil dari variabel command
-	switch( $commands ) {
-		case 'loadArrayIsFile':
-			// Memuat data properti
-			return loadArrayFile([
-				$repositories,
-				$allProject
-			]);
-			break;
-	}
     } catch (Exception $e) {
         printf( "Error on line %s", $e->getLine() );
         printf( "\rin %s", $e->getFIle() );
@@ -105,13 +88,6 @@ $commands;
         return false;
     }
 
-}
-
-// Fungsi yang digunakan untuk mengecek hasil dari array
-// yang dideklarikan sebagai file.
-function loadArrayIsFile( array $arrayFiles ) {
-	$arrayFiles = is_array( $arrayFiles );
-	var_dump( $arrayFiles );
 }
 
 function repositories( $repo ) {
@@ -134,7 +110,7 @@ function repositories( $repo ) {
 }
 
 function allProject( $project ) {
-    //print_r( $project );
+    var_dump( $project );
 }
 
 function package( $packagist ) {
