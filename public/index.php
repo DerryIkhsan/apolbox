@@ -38,11 +38,15 @@ function buildProject() {
     extractArrayToString( $konvertToArray );
   }
   
+  // Membuka settings.properties
   if ( $openSettingsProperties = fopen( $settingsProperties, 'r+' ) ) {
+      // Membaca settings.properties
       $readSettingsProperties = fread( $openSettingsProperties, 4096 );
       
-      var_dump( $readSettingsProperties );
+      //var_dump( $readSettingsProperties );
   }
+  
+  // Menutup semua setelah dibuka.
   fclose( $openBuildProperties );
   fclose( $openSettingsProperties );
 }
@@ -119,15 +123,52 @@ function repositories( $repo ) {
 }
 
 function allProject( $project ) {
-    var_dump( $project );
+    // $project adalah sebuah fungsi untuk mengakses
+    // semua project yang sedang dibuat.
+    if ( is_array( $project ) ) {
+        //print_r( $project );
+    }
 }
 
 function package( $packagist ) {
-    var_dump( $packagist );
+    // Mengubah variabel $packagist menjadi sebuah direktori.
+    $package = str_replace( '.', '/', $packagist );
+    
+    if ( function_exists( 'main' ) ) {
+        return main( $package );
+    }
+    return false;
 }
 
 function vendor( $vendor ) {
-    var_dump( $vendor );
+    //var_dump( $vendor );
+}
+
+function main( string $args ) {
+    
+    try {
+        
+        $mainDirectory = getProjectDirectory() . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . $args;
+        $autoload = '/autoload.php';
+        
+        if ( is_dir( $mainDirectory ) ) {
+            require $mainDirectory . $autoload;
+        }
+        else {
+            unset( $mainDirectory );
+            
+            $mainDirectory = dirname( getProjectDirectory() ) . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . $args;
+            
+            if ( ! is_dir( $mainDirectory ) ) {
+                throw new Exception("No package $args", 1);
+            }
+            require $mainDirectory . $autoload;
+        }
+    } catch (Exception $e) {
+        printf( "Warning: %s ", $e->getMessage() );
+        printf( "in file %s ", $e->getFile() );
+        printf( "line : %s", $e->getLine() );
+    }
 }
 
 return buildProject();
