@@ -11,3 +11,7 @@
  * @author Ayus Irfang Filaras <ayus.sahabat@gmail.com>
  */
 require 'autoload.class.php';
+
+// Turn on
+$autoload = new Autoload();
+return $autoload->loadClassBySplAutoload();
