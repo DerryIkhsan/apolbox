@@ -10,4 +10,4 @@
  * 
  * @author Ayus Irfang Filaras <ayus.sahabat@gmail.com>
  */
-echo "Hello autoload";
+require 'autoload.class.php';
