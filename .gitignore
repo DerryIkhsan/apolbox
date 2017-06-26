@@ -1,0 +1,10 @@
+*.[oa]
+*~
+assets/
+vendor/
+App/
+composer.lock
+composer.phar
+.settings/
+.buildpath
+.project

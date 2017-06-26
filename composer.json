@@ -1,0 +1,40 @@
+{
+	"name" : "apolbox/apolbox",
+	"type" : "Project",
+	"description" : "All In One Library",
+	"keywords" : [
+		"Framework",
+		"Library"
+	],
+	"license" : "Apache-2.0",
+	"require" : {
+		"php" : ">=5.6.3",
+		"apolbox/framework" : "1.0.*"
+	},
+	"require-dev" : {
+		"monolog/monolog" : "1.22.1",
+		"apolbox/sekolah" : "1.0.*"
+	},
+	"autoload" : {
+		"classmap" : [
+			"database"
+		],
+		"psr-4" : {
+			"App\\" : "php -r \"if(!is_dir('App')){@return;}else{@return 'App/';}\""
+		}
+	},
+	"autoload-dev" : {
+		"classmap" : [
+			"test/TestCase.php"
+		]
+	},
+	"authors" : [{
+			"name" : "Ayus irfang filaras",
+			"email" : "ayus.sahabat@gmail.com"
+		}
+	],
+	"scripts" : {
+		"post-install-cmd" : "PHPCenter\\Command\\ComposerScript::postInstall",
+		"post-update-cmd" : "PHPCenter\\Command\\ComposerScript::postUpdate"
+	}
+}
